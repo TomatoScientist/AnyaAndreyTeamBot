@@ -35,8 +35,8 @@ def run():
         for m in messages:
             update_id += m["update_id"]
             if "text" in m["message"]:
-                print(f"ID: {m["message"]["chat"]["id"]}")
-                print(f"Сообщение: {m["message"]["text"]}")
+                print(f"ID: {m['message']['chat']['id']}")
+                print(f"Сообщение: {m['message']['text']}")
 
 
 if __name__ == '__main__':
