@@ -38,6 +38,6 @@ def run():
                 print(f"ID: {m['message']['chat']['id']}")
                 print(f"Сообщение: {m['message']['text']}")
 
-
+#тестовое подключение
 if __name__ == '__main__':
     run()
