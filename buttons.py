@@ -4,15 +4,15 @@ from telebot import types
 token = "8298950837:AAHremcLil5IbzqOEtp9migwNdhrkOKq05I"
 bot = telebot.TeleBot(token)
 
-buttons = ["кнопка 1", "кнопка 2", "кнопка 3", "кнопка 4", "кнопка 5"]
+buttons = ["page_1", "page_2", "page_3", "page_4", "page_5"]
 
 buttons_per_page = 4
 page = 0
 def generate_markup():
     global page
     m = types.InlineKeyboardMarkup()
-    start = page * buttons_per_page
-    end = start * buttons_per_page
+    start = page + buttons_per_page
+    end = start + buttons_per_page
     for b in buttons[start:end]:
         button = types.InlineKeyboardButton(b, callback_data=b)
 
@@ -34,7 +34,12 @@ def start(message):
     markup = generate_markup()
     bot.send_message(message.chat.id, "Выберите кнопки", reply_markup=markup)
 
-
+@bot.callback_query_handler(func=lambda call: True)
+def query_handler(call):
+    if call.data.startswith("page_"):
+        _, page = call.data.split("_")
+        markup = generate_markup(page)
+        bot.edit_message_text(chat_id=call.message.chat_id, text="Выберите элемент", reply_markup=markup)
 
 # @bot.message_handler(commands=["start"])
 # def start_message(message):
