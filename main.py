@@ -5,7 +5,7 @@ from pyexpat.errors import messages
 import requests
 import telebot
 
-token = "8298950837:AAHremcLil5IbzqOEtp9migwNdhrkOKq05I"
+token = ""
 bot = telebot.TeleBot(token)
 
 url = "https://api.telegram.org/bot"
@@ -39,5 +39,6 @@ def run():
                 print(f"Сообщение: {m['message']['text']}")
 
 #тестовое подключение
+
 if __name__ == '__main__':
     run()
