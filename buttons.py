@@ -1,7 +1,7 @@
 import telebot
 from telebot import types
 
-token = "8006928090:AAEsGr5Zrnxfgg-qMml6gSTxLZ-BJi9nc8E"
+token = ""
 bot = telebot.TeleBot(token)
 
 buttons = ["button_1", "button_2", "button_3", "button_4", "button_5"]
@@ -21,7 +21,6 @@ def generate_markup(page=0):
         page -= 1
         b1 = types.InlineKeyboardButton("<", callback_data=f"page_{page}")
         markup.add(b1)
-        # return markup
     if end < len(buttons):
         page += 1
         b2 = types.InlineKeyboardButton(">", callback_data=f"page_{page}")
