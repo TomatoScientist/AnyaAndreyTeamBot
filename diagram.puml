@@ -1,5 +1,5 @@
 @startuml
-title Блок-схема Telegram-бот
+title Блок-схема платёжного Telegram-бота
 
 start
 
