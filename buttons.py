@@ -1,31 +1,31 @@
 import telebot
 from telebot import types
 
-token = "8298950837:AAHremcLil5IbzqOEtp9migwNdhrkOKq05I"
+token = ""
 bot = telebot.TeleBot(token)
 
-buttons = ["page_1", "page_2", "page_3", "page_4", "page_5"]
+buttons = ["button_1", "button_2", "button_3", "button_4", "button_5"]
 
 buttons_per_page = 4
-page = 0
-def generate_markup():
-    global page
-    m = types.InlineKeyboardMarkup()
-    start = page + buttons_per_page
+
+def generate_markup(page=0):
+
+    markup = types.InlineKeyboardMarkup()
+    start = page * buttons_per_page
     end = start + buttons_per_page
     for b in buttons[start:end]:
         button = types.InlineKeyboardButton(b, callback_data=b)
+        markup.add(button)
 
     if page > 0:
         page -= 1
         b1 = types.InlineKeyboardButton("<", callback_data=f"page_{page}")
-        m.add(b1)
-        return m
+        markup.add(b1)
     if end < len(buttons):
         page += 1
         b2 = types.InlineKeyboardButton(">", callback_data=f"page_{page}")
-        m.add(b2)
-        return m
+        markup.add(b2)
+    return markup
 
 
 
@@ -34,12 +34,20 @@ def start(message):
     markup = generate_markup()
     bot.send_message(message.chat.id, "Выберите кнопки", reply_markup=markup)
 
-@bot.callback_query_handler(func=lambda call: True)
+
+@bot.callback_query_handler(func=lambda call:True)
 def query_handler(call):
     if call.data.startswith("page_"):
         _, page = call.data.split("_")
-        markup = generate_markup(page)
-        bot.edit_message_text(chat_id=call.message.chat_id, text="Выберите элемент", reply_markup=markup)
+        markup = generate_markup(int(page))
+        bot.edit_message_text(
+            chat_id=call.message.chat.id,
+            message_id=call.message.message_id,
+            text = "Выберите элемент:",
+            reply_markup=markup
+        )
+
+
 
 # @bot.message_handler(commands=["start"])
 # def start_message(message):
